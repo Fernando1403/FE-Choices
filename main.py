@@ -109,4 +109,53 @@ def fazer_palpite():
 
 fazer_palpite()
 
-#Fantasy
+#Fantasy - Podio
+races_podium = {
+    "Corrida 1": ["Piloto A", "Piloto B", "Piloto C"],
+    "Corrida 2": ["Piloto B", "Piloto C", "Piloto A"],
+    "Corrida 3": ["Piloto C", "Piloto A", "Piloto B"]
+}
+
+# Função para fazer palpites de pódio
+def fazer_palpite_podio():
+    global pontos
+    print("\nVamos fazer um palpite sobre o pódio da próxima corrida!")
+    valor_apostado = verificaValor()
+    
+    print("Corridas disponíveis:")
+    for corrida in races_podium:
+        print(corrida)
+
+    corrida_escolhida = input("Escolha uma corrida: ")
+    if corrida_escolhida not in races_podium:
+        print("Corrida inválida. Tente novamente.")
+        return
+
+    print("Pilotos disponíveis:")
+    pilotos = set(piloto for podio in races_podium.values() for piloto in podio)
+    for piloto in pilotos:
+        print(piloto)
+
+    palpite_primeiro = input("Quem você acha que ficará em primeiro lugar? ")
+    palpite_segundo = input("Quem você acha que ficará em segundo lugar? ")
+    palpite_terceiro = input("Quem você acha que ficará em terceiro lugar? ")
+
+    palpite = [palpite_primeiro, palpite_segundo, palpite_terceiro]
+    resultado = races_podium[corrida_escolhida]
+
+    pontos_ganhos = 0
+    for i in range(3):
+        if palpite[i] == resultado[i]:
+            pontos_ganhos += 10
+
+    if pontos_ganhos > 0:
+        print(f"Parabéns! Você acertou {pontos_ganhos // 10} posições!")
+        pontos += pontos_ganhos
+    else:
+        print("Palpites errados. Nenhuma posição correta.")
+        pontos -= valor_apostado
+
+    print(f"Agora você tem {pontos} pontos.")
+    return pontos
+
+fazer_palpite_podio()
