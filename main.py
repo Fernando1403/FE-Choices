@@ -39,19 +39,17 @@ def daily_roulette():
     # Rodando a roleta
     premio = spin_roulette()
 
-    # Exibindo o prêmio obtido
-    print(f"Parabéns! Você ganhou: {premio}")
-
     if premio == prizes[0]:
         pontos += 10
     elif premio == prizes[1]:
         pontos += 20
     
+    # Exibindo o prêmio obtido
+    print(f"Parabéns! Você ganhou: {premio} e agora possui no total {pontos} pontos")
+
     return pontos
 
-# Executando a roleta diária
-if __name__ == "__main__":
-    daily_roulette()
+daily_roulette()
 
 #Palpites
 # Dados de corridas e vencedores
@@ -159,3 +157,52 @@ def fazer_palpite_podio():
     return pontos
 
 fazer_palpite_podio()
+
+#Fantasy
+pilotosFantasy = ["Piloto 1", "Piloto 2", "Piloto 3", "Piloto 4", "Piloto 5", "Piloto 6", "Piloto 7", "Piloto 8", "Piloto 9", "Piloto 10"]
+escuderiasFantasy = ["Escuderia 1", "Escuderia 2", "Escuderia 3", "Escuderia 4", "Escuderia 5"]
+
+selecao_pilotos = []
+selecao_escuderias = []
+
+# Resultados da corrida Fantasy
+resultado_pilotosFantasy = ["Piloto 1", "Piloto 2", "Piloto 3", "Piloto 4", "Piloto 5"]
+resultado_escuderiasFantasy = ["Escuderia 1", "Escuderia 2"]
+
+# Solicita ao usuário para escolher os pilotos
+print("Escolha 5 pilotos para montar o seu Fantasy:")
+print(pilotosFantasy)
+for i in range(5):
+    piloto = input(f"Escolha o piloto {i+1}: ")
+    while piloto not in pilotosFantasy:
+        print("Piloto inválido. Tente novamente.")
+        piloto = input(f"Escolha o piloto {i+1}: ")
+    selecao_pilotos.append(piloto)
+
+# Solicita ao usuário para escolher as escuderias
+print("Escolha 2 escuderias:")
+print(escuderiasFantasy)
+for i in range(2):
+    escuderia = input(f"Escolha a escuderia {i+1}: ")
+    while escuderia not in escuderiasFantasy:
+        print("Escuderia inválida. Tente novamente.")
+        escuderia = input(f"Escolha a escuderia {i+1}: ")
+    selecao_escuderias.append(escuderia)
+
+# Verificação dos resultados
+for piloto in selecao_pilotos:
+    if piloto in resultado_pilotosFantasy[:5]:
+        pontos += 20
+    else:
+        pontos -= 10
+
+for escuderia in selecao_escuderias:
+    if escuderia in resultado_escuderiasFantasy[:2]:
+        pontos += 10
+    else:
+        pontos -= 10
+
+print(f"O resultado dos pilotos do Fantasy foi {resultado_pilotosFantasy} a cada acerto voce ganha 20 e a cada erro perde 10")
+print(f"O resultado dos pilotos do Fantasy foi {resultado_escuderiasFantasy} a cada acerto voce ganha 10 e a cada erro perde 10")
+
+print(f"Você terminou a rodada fantasy com {pontos} pontos.")
