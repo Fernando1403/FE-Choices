@@ -1,6 +1,6 @@
-# FE Choices: O novo entretenimeto para a formula E
+# FE Choices: O novo entretenimeto para a Formula E
 
-Bem-vindo ao repositório do **Ocean Rescue**. Este projeto é uma aplicação em Python que permite aos usuários consultar dados sobre a condição das praias e dos oceanos. 
+Bem-vindo ao repositório da **FE Choices**. Este projeto é uma aplicação em Python que permite aos usuários dar seus palpites sobre as proximas corridas de Formula E. 
 
 ## 📑 Sumário
 
