@@ -92,4 +92,4 @@ Este projeto é licenciado sob a [MIT License](LICENSE).
 * **Fernando Gonzales Alexandre** - *RM:555045* - [Fernando1403](https://github.com/Fernando1403)
 * **Lucas Catroppa Piratininga** - *RM:555450* - [lucasdias0812](https://github.com/lucasdias0812)
 * **Caio de Conti Bucciarelli** - *RM:554899* - [CaioBucciarelli](https://github.com/CaioBucciarelli)
-* **Vitor Musolino Teixeira** - *RM:555012* - [Fernando1403](https://github.com/lucasdias0812)
+* **Vitor Musolino Teixeira** - *RM:555012* - [vitormusolino](https://github.com/vitormusolino)
