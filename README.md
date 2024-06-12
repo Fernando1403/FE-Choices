@@ -1,4 +1,4 @@
-# Ocean Rescue: Sistema de Monitoramento e Analise da Condição das Praias e dos Oceanos
+# FE Choices: O novo entretenimeto para a formula E
 
 Bem-vindo ao repositório do **Ocean Rescue**. Este projeto é uma aplicação em Python que permite aos usuários consultar dados sobre a condição das praias e dos oceanos. 
 
