@@ -14,15 +14,15 @@ Bem-vindo ao repositório da **FE Choices**. Este projeto é uma aplicação em 
 - [Licença](#licença)
 - [Autores](#autores)
 
-## 🌊 Descrição do Projeto
+## ✒️ Descrição do Projeto
 
-A nossa aplicação visa monitorar e melhorar as condições das praias, permitindo que os usuários consultem a qualidade da água, condição da praia e o nível de poluição. Os usuários também podem enviar feedback sobre as condições da praia, que serão armazenadas e atualizadas no sistema.
+FE Choices, em nossa plataforma, os usuários terão a oportunidade de demonstrar seus conhecimentos em palpites nas corridas de Fórmula-E, de forma totalmente gratuita, feita com pontos. O usuário receberá pontos ao se registrar no site, convidar amigos, ou na roleta gratuita, que será diária, girando a roleta, você pode ter a sorte de ganhar pontos. E fazendo seus palpites e ganhando, você ganha mais pontos, com esses pontos, você pode trocá-los por prêmios exclusivos da Fórmula-E.
 
 ## 🛠️ Funcionalidades
 
-- Consultar dados de uma praia específica, incluindo qualidade da água, condição da praia e nível de poluição.
-- Enviar feedback sobre a condição da praia, incluindo a qualidade da água, condição geral e nível de presença de lixo.
-- Adicionar novas praias e atualizar os dados existentes.
+- Apostar em pilotos, pódios entre outras coisas da Formula E.
+- Popularizar a Formula E.
+- Roleta Diaria
 
 ## 📋 Requisitos
 
@@ -36,41 +36,24 @@ A nossa aplicação visa monitorar e melhorar as condições das praias, permiti
 
 2. **Clone este repositório:**
     ```sh
-    git clone https://github.com/seu-usuario/ocean-rescue--python.git
+    git clone https://github.com/seu-usuario/FE-Choices.git
     ```
 
 3. **Navegue até o diretório do projeto:**
     ```sh
-    cd ocean-rescue
+    cd FE-Choices
     ```
 
 ## ⚙️ Instruções de Uso
 
 1. Execute o script principal:
     ```sh
-    python ocean_rescue.py
+    python FE-choices.py
     ```
 2. Siga as instruções no console:
-    - Digite seu nome para iniciar.
-    - Escolha uma opção do menu para consultar dados da praia ou enviar feedback.
+    - Digite seu user e senha para iniciar.
+    - Começe a dar seus palpites.
     - Siga os prompts para fornecer as informações necessárias
-
-### Exemplo de Uso
-
-```sh
-Digite seu nome: João
-Olá João, Seja bem-vindo à Ocean Rescue!
-1. Consultar dados da praia
-2. Enviar feedback sobre presença de lixo
-3. Sair
-Escolha uma opção: 1
-Lista de prais disponíveis: 
-1. Praia das asturias
-Digite o nome da praia: Praia das asturias
-Qualidade da água: Boa
-Condição da Praia: Boa
-Nível de Poluição: Alta
-```
 
 ## 📦 Dependências
 
