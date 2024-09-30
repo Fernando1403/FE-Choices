@@ -1,208 +1,256 @@
+import logging
+import random
+import sys
+import unittest
+
+# Config log
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
+
+# Código original
 pontos = 20
 
-print("Olá seja bem vindo a FE Choices!!\nAqui voce pode dar seus palpites sobre a formula E\n")
-
-userCadastro = input("Para começar vamos pedir para voce se cadastrar\nQual será seu user: ")
-userSenha = input("Qual senha voce deseja cadastrar: ")
-
-print("Faça o login para começar a dar seus palpites !")
-
-user = input("Insira seu usuario: ")
-senha = input("Insira sua senha: ")
-
-while user != userCadastro or senha != userSenha:
-    print("Usuario e ou senha incorretos, tente novamente")
-    user = input("Insira seu usuario: ")
-    senha = input("Insira sua senha: ")
-print(f"Seja bem vindo {user}, voce possui {pontos} pontos")
-
-#Roleta
-import random
-
-prizes = [
-    "10 pontos em créditos",
-    "20 pontos em créditos",
-    "Sem premiação"
-]
-
-def spin_roulette():
-    # Seleciona um prêmio aleatoriamente
-    premio = random.choice(prizes)
-    return premio
-
-# Função principal para rodar a roleta diária
-def daily_roulette():
+def main():
     global pontos
-    print("Bem-vindo à roleta diária!")
-    input("Pressione Enter para rodar a roleta...")
+    logging.info("Olá, seja bem-vindo à FE Choices!")
 
-    # Rodando a roleta
-    premio = spin_roulette()
+    userCadastro = input("Para começar, vamos pedir para você se cadastrar\nQual será seu user: ")
+    userSenha = input("Qual senha você deseja cadastrar: ")
 
-    if premio == prizes[0]:
-        pontos += 10
-    elif premio == prizes[1]:
-        pontos += 20
-    
-    # Exibindo o prêmio obtido
-    print(f"Parabéns! Você ganhou: {premio} e agora possui no total {pontos} pontos")
+    while True:
+        try:
+            logging.info("Solicitando login.")
+            user = input("Insira seu usuário: ")
+            senha = input("Insira sua senha: ")
 
-    return pontos
+            if user != userCadastro or senha != userSenha:
+                logging.warning("Tentativa de login falhou.")
+                raise ValueError("Usuário e/ou senha incorretos, tente novamente.")
 
-daily_roulette()
+            logging.info(f"Usuário {user} logado com sucesso.")
+            break
+        except ValueError as erro:
+            print(erro)
 
-#Palpites
-# Dados de corridas e vencedores
-races = {
-    "Corrida 1": "Piloto A",
-    "Corrida 2": "Piloto B",
-    "Corrida 3": "Piloto C"
-}
+    # Roleta Opções
+    prizes = ["10 pontos em créditos", "20 pontos em créditos", "Sem premiação"]
 
-# Função verificar se os pontos são Numeros
-def verificaPontos():
-    num = input("Quantos pontos voce deseja colocar ? ")
-    while not num.isnumeric():
-        print("Valor Invalido")
-        num = input("Quantos pontos voce deseja colocar ? ")
-    num = int(num)
-    return num
+    def spin_roulette():
+        return random.choice(prizes)
 
-# Função para verificar se é numero
-def verificaValor():
-    global pontos
-    num = verificaPontos()
-    while num > pontos:
-        print("Valor do palpite maior que quantidade de pontos")
-        num = verificaPontos()
-    return num
+    def daily_roulette():
+        global pontos
+        logging.info("Iniciando a roleta diária.")
+        input("Pressione Enter para rodar a roleta...")
 
-# Função para fazer palpites
-def fazer_palpite():
-    global pontos
-    print("\nVamos fazer um palpite sobre a próxima corrida!")
-    valorApostado = verificaValor()
-    for corrida in races:
-        print(corrida)
-    
-    corrida_escolhida = input("Escolha uma corrida: ")
-    if corrida_escolhida not in races:
-        print("Corrida inválida. Tente novamente.")
-        return
+        premio = spin_roulette()
+        if premio == "10 pontos em créditos":
+            pontos += 10
+        elif premio == "20 pontos em créditos":
+            pontos += 20
 
-    for piloto in races:
-        print(races[piloto])
-    palpite = input(f"Quem você acha que vai ganhar {corrida_escolhida}? ")
+        logging.info(f"Prêmio obtido: {premio}. Pontos totais: {pontos}.")
+        print(f"Você ganhou: {premio} e agora possui no total {pontos} pontos.")
 
-    if palpite == races[corrida_escolhida]:
-        print(f"Parabéns! Você acertou o palpite! \nVocê tinha {pontos} pontos")
-        valorApostado * 2
-        pontos += valorApostado  # Ganhe 30 pontos por palpite correto
-    else:
-        print(f"Palpite errado. O vencedor foi {races[corrida_escolhida]}. \nVocê tinha {pontos} pontos")
-        pontos -= valorApostado  # Perde 10 pontos por palpite errado
+    daily_roulette()
 
-    print(f"Agora você tem {pontos} pontos")
-    return pontos
+    # Funções de palpites
+    races = {
+        "Corrida 1": "Piloto A",
+        "Corrida 2": "Piloto B",
+        "Corrida 3": "Piloto C"
+    }
 
-fazer_palpite()
+    def verificaPontos():
+        while True:
+            try:
+                num = input("Quantos pontos você deseja colocar? ")
+                if not num.isnumeric():
+                    raise ValueError("Valor inválido.")
+                return int(num)
+            except ValueError as erro:
+                print(erro)
 
-#Fantasy - Podio
-races_podium = {
-    "Corrida 1": ["Piloto A", "Piloto B", "Piloto C"],
-    "Corrida 2": ["Piloto B", "Piloto C", "Piloto A"],
-    "Corrida 3": ["Piloto C", "Piloto A", "Piloto B"]
-}
+    def verificaValor():
+        global pontos
+        while True:
+            num = verificaPontos()
+            if num > pontos:
+                print("Valor do palpite maior que a quantidade de pontos")
+            else:
+                return num
 
-# Função para fazer palpites de pódio
-def fazer_palpite_podio():
-    global pontos
-    print("\nVamos fazer um palpite sobre o pódio da próxima corrida!")
-    valor_apostado = verificaValor()
-    
-    print("Corridas disponíveis:")
-    for corrida in races_podium:
-        print(corrida)
+    def fazer_palpite():
+        global pontos
+        print("\nVamos fazer um palpite sobre a próxima corrida!")
+        valorApostado = verificaValor()
 
-    corrida_escolhida = input("Escolha uma corrida: ")
-    if corrida_escolhida not in races_podium:
-        print("Corrida inválida. Tente novamente.")
-        return
+        for corrida in races:
+            print(corrida)
 
-    print("Pilotos disponíveis:")
-    pilotos = set(piloto for podio in races_podium.values() for piloto in podio)
-    for piloto in pilotos:
-        print(piloto)
+        corrida_escolhida = input("Escolha uma corrida: ")
+        if corrida_escolhida not in races:
+            print("Corrida inválida. Tente novamente.")
+            return
 
-    palpite_primeiro = input("Quem você acha que ficará em primeiro lugar? ")
-    palpite_segundo = input("Quem você acha que ficará em segundo lugar? ")
-    palpite_terceiro = input("Quem você acha que ficará em terceiro lugar? ")
+        palpite = input(f"Quem você acha que vai ganhar {corrida_escolhida}? ")
 
-    palpite = [palpite_primeiro, palpite_segundo, palpite_terceiro]
-    resultado = races_podium[corrida_escolhida]
+        if palpite == races[corrida_escolhida]:
+            print(f"Parabéns! Você acertou o palpite!")
+            pontos += valorApostado * 2
+        else:
+            print(f"Palpite errado. O vencedor foi {races[corrida_escolhida]}.")
+            pontos -= valorApostado
 
-    pontos_ganhos = 0
-    for i in range(3):
-        if palpite[i] == resultado[i]:
-            pontos_ganhos += 10
+        print(f"Agora você tem {pontos} pontos")
+        return pontos
 
-    if pontos_ganhos > 0:
-        print(f"Parabéns! Você acertou {pontos_ganhos // 10} posições!")
-        pontos += pontos_ganhos
-    else:
-        print("Palpites errados. Nenhuma posição correta.")
-        pontos -= valor_apostado
+    fazer_palpite()
 
-    print(f"Agora você tem {pontos} pontos.")
-    return pontos
+    # Palpites de pódio
+    races_podium = {
+        "Corrida 1": ["Piloto A", "Piloto B", "Piloto C"],
+        "Corrida 2": ["Piloto B", "Piloto C", "Piloto A"],
+        "Corrida 3": ["Piloto C", "Piloto A", "Piloto B"]
+    }
 
-fazer_palpite_podio()
+    def fazer_palpite_podio():
+        global pontos
+        print("\nVamos fazer um palpite sobre o pódio da próxima corrida!")
+        valor_apostado = verificaValor()
 
-#Fantasy
-pilotosFantasy = ["Piloto 1", "Piloto 2", "Piloto 3", "Piloto 4", "Piloto 5", "Piloto 6", "Piloto 7", "Piloto 8", "Piloto 9", "Piloto 10"]
-escuderiasFantasy = ["Escuderia 1", "Escuderia 2", "Escuderia 3", "Escuderia 4", "Escuderia 5"]
+        print("Corridas disponíveis:")
+        for corrida in races_podium:
+            print(corrida)
 
-selecao_pilotos = []
-selecao_escuderias = []
+        corrida_escolhida = input("Escolha uma corrida: ")
+        if corrida_escolhida not in races_podium:
+            print("Corrida inválida. Tente novamente.")
+            return
 
-# Resultados da corrida Fantasy
-resultado_pilotosFantasy = ["Piloto 1", "Piloto 2", "Piloto 3", "Piloto 4", "Piloto 5"]
-resultado_escuderiasFantasy = ["Escuderia 1", "Escuderia 2"]
+        print("Pilotos disponíveis:")
+        pilotos = set(piloto for podio in races_podium.values() for piloto in podio)
+        for piloto in pilotos:
+            print(piloto)
 
-# Solicita ao usuário para escolher os pilotos
-print("Escolha 5 pilotos para montar o seu Fantasy:")
-print(pilotosFantasy)
-for i in range(5):
-    piloto = input(f"Escolha o piloto {i+1}: ")
-    while piloto not in pilotosFantasy:
-        print("Piloto inválido. Tente novamente.")
-        piloto = input(f"Escolha o piloto {i+1}: ")
-    selecao_pilotos.append(piloto)
+        palpite = []
+        for i in range(3):
+            palpite.append(input(f"Quem você acha que ficará em {['primeiro', 'segundo', 'terceiro'][i]} lugar? "))
 
-# Solicita ao usuário para escolher as escuderias
-print("Escolha 2 escuderias:")
-print(escuderiasFantasy)
-for i in range(2):
-    escuderia = input(f"Escolha a escuderia {i+1}: ")
-    while escuderia not in escuderiasFantasy:
-        print("Escuderia inválida. Tente novamente.")
-        escuderia = input(f"Escolha a escuderia {i+1}: ")
-    selecao_escuderias.append(escuderia)
+        resultado = races_podium[corrida_escolhida]
 
-# Verificação dos resultados
-for piloto in selecao_pilotos:
-    if piloto in resultado_pilotosFantasy[:5]:
-        pontos += 20
-    else:
-        pontos -= 10
+        pontos_ganhos = 0
+        for i in range(3):
+            if palpite[i] == resultado[i]:
+                pontos_ganhos += 10
 
-for escuderia in selecao_escuderias:
-    if escuderia in resultado_escuderiasFantasy[:2]:
-        pontos += 10
-    else:
-        pontos -= 10
+        if pontos_ganhos > 0:
+            print(f"Parabéns! Você acertou {pontos_ganhos // 10} posições!")
+            pontos += pontos_ganhos
+        else:
+            print("Palpites errados. Nenhuma posição correta.")
+            pontos -= valor_apostado
 
-print(f"O resultado dos pilotos do Fantasy foi {resultado_pilotosFantasy} a cada acerto voce ganha 20 e a cada erro perde 10")
-print(f"O resultado dos pilotos do Fantasy foi {resultado_escuderiasFantasy} a cada acerto voce ganha 10 e a cada erro perde 10")
+        print(f"Agora você tem {pontos} pontos.")
+        return pontos
 
-print(f"Você terminou a rodada fantasy com {pontos} pontos.")
+    fazer_palpite_podio()
+
+    # Fantasy
+    pilotosFantasy = ["Piloto 1", "Piloto 2", "Piloto 3", "Piloto 4", "Piloto 5", "Piloto 6", "Piloto 7", "Piloto 8",
+                      "Piloto 9", "Piloto 10"]
+    escuderiasFantasy = ["Escuderia 1", "Escuderia 2", "Escuderia 3", "Escuderia 4", "Escuderia 5"]
+
+    selecao_pilotos = []
+    selecao_escuderias = []
+
+    resultado_pilotosFantasy = ["Piloto 1", "Piloto 2", "Piloto 3", "Piloto 4", "Piloto 5"]
+    resultado_escuderiasFantasy = ["Escuderia 1", "Escuderia 2"]
+
+    # Escolha dos pilotos
+    print("Escolha 5 pilotos para montar o seu Fantasy:")
+    print(pilotosFantasy)
+    for i in range(5):
+        while True:
+            try:
+                piloto = input(f"Escolha o piloto {i + 1}: ")
+                if piloto not in pilotosFantasy:
+                    raise ValueError("Piloto inválido. Tente novamente.")
+                selecao_pilotos.append(piloto)
+                break
+            except ValueError as erro:
+                print(erro)
+
+    # Escolha das escuderias
+    print("Escolha 2 escuderias:")
+    print(escuderiasFantasy)
+    for i in range(2):
+        while True:
+            try:
+                escuderia = input(f"Escolha a escuderia {i + 1}: ")
+                if escuderia not in escuderiasFantasy:
+                    raise ValueError("Escuderia inválida. Tente novamente.")
+                selecao_escuderias.append(escuderia)
+                break
+            except ValueError as erro:
+                print(erro)
+
+    # Verificar os resultados
+    for piloto in selecao_pilotos:
+        if piloto in resultado_pilotosFantasy[:5]:
+            pontos += 20
+        else:
+            pontos -= 10
+
+    for escuderia in selecao_escuderias:
+        if escuderia in resultado_escuderiasFantasy[:2]:
+            pontos += 10
+        else:
+            pontos -= 10
+
+    print(f"O resultado dos pilotos do Fantasy foi {resultado_pilotosFantasy}. A cada acerto você ganha 20 e a cada erro perde 10.")
+    print(f"O resultado das escuderias do Fantasy foi {resultado_escuderiasFantasy}. A cada acerto você ganha 10 e a cada erro perde 10.")
+    print(f"Você terminou a rodada fantasy com {pontos} pontos.")
+
+if __name__ == "__main__":
+    main()
+
+# Testes
+'''class Teste(unittest.TestCase):
+    def setUp(self):
+        self.pontos = 20
+        self.userCadastro = "usuario"
+        self.userSenha = "senha"
+
+    def test_login_success(self):
+        user = self.userCadastro
+        senha = self.userSenha
+        self.assertEqual(user, self.userCadastro)
+        self.assertEqual(senha, self.userSenha)
+
+    def test_login_failure(self):
+        user = "usuario_errado"
+        senha = "senha"
+        with self.assertRaises(ValueError):
+            if user != self.userCadastro or senha != self.userSenha:
+                raise ValueError("Usuário e/ou senha incorretos, tente novamente.")
+
+    def test_daily_roulette(self):
+        global pontos
+        original_points = self.pontos
+        premio = "10 pontos em créditos"  # Simulando resultado da roleta
+        if premio == "10 pontos em créditos":
+            self.pontos += 10
+        self.assertEqual(self.pontos, original_points + 10)
+
+    def test_fazer_palpite_errado(self):
+        global pontos
+        corrida = "Corrida 1"
+        palpite = "Piloto B"
+        valor_apostado = 10
+        vencedor = "Piloto A"
+        if palpite != vencedor:
+            self.pontos -= valor_apostado
+        self.assertEqual(self.pontos, pontos - 10)'''
+
+if __name__ == "__main__":
+    unittest.main()
