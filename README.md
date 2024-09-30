@@ -23,6 +23,8 @@ FE Choices, em nossa plataforma, os usuários terão a oportunidade de demonstra
 - Apostar em pilotos, pódios entre outras coisas da Formula E.
 - Popularizar a Formula E.
 - Roleta Diaria
+- Palpites
+- Fantasy
 
 ## 📋 Requisitos
 
